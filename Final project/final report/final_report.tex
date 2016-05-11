@@ -95,7 +95,7 @@ The algorithm for this code can be described by the flowsheet in Figure \ref{fig
   \label{fig:flowsheet}
 \end{figure}
 
-The path length is sampled for the region the neutron is currently in (or, if it is crossing the interface between the two regions, for the region the neutron is entering).
+The path length is sampled for the region the neutron is currently in (or, if it is crossing the interface between the two regions, for the region the neutron is entering) \cite{NE250_notes_2}.
  
 \begin{equation}
 F_s(s)=\Sigma_t e^{-\Sigma_ts}
@@ -109,7 +109,7 @@ If the particle is moving toward the interface, the distance between the particl
 
 If the particle is moving toward a boundary, the sampled path length is compared to the distance between the particle location and the boundary. If the sampled path length is greater than the distance to the boundary, the particle leaks and is terminated. 
 
-If the particle does not change regions and does not leak, it will collide within the region it is in. The particle is moved to its new location and the type of collision is sampled. Two types of collision are possible, scattering and absorption; these are characterized by their cross sections, $\Sigma_{s}$ and $\Sigma_{a}$, respectively. The total cross section is defined as $\Sigma_{t}=\Sigma_{s} + \Sigma_{a}$. Thus, the probability of a reaction $i$ is given by the following.
+If the particle does not change regions and does not leak, it will collide within the region it is in. The particle is moved to its new location and the type of collision is sampled. Two types of collision are possible, scattering and absorption; these are characterized by their cross sections, $\Sigma_{s}$ and $\Sigma_{a}$, respectively. The total cross section is defined as $\Sigma_{t}=\Sigma_{s} + \Sigma_{a}$. Thus, the probability of a reaction $i$ is given by the following \cite{NE250_notes_2}.
 
 \begin{equation}
 p_{i} = \frac{\Sigma_{i}}{\Sigma_{t}}
@@ -199,15 +199,15 @@ The different cross-sections on either side of the source plan in \ref{fig:an_re
 \begin{figure}
 \centering
   \includegraphics[width=12cm, keepaspectratio,]{mc_result1}
-   \caption{Example of code output showing Monte Carlo output with the different locations for the source ($x = 0$) and the interface ($x=-2$).}
+   \caption{Example of code output showing Monte Carlo output with the different locations for the source ($x = 0$) and the interface ($x=1$). $\Sigma_{t,1}= 1.0$, $\Sigma_{s,1} = 0.9$; $\Sigma_{t,2}= 3.0$, $\Sigma_{s,2} = 0.9$.}
   \label{fig:mc_result1}
 \end{figure}
 
-In Figure \ref{fig:mc_result1}, the total and scattering cross-sections on the right of the interface are two and three times as large, respectively, as those on the right. This means that the probability of absorption to the left of the interface ($x = -1$) is half of that on the right. The result is a slight peak in flux, stemming from the fact that particles are more likely to be absorbed to the right of the interface than to the left.
+In Figure \ref{fig:mc_result1}, $\Sigma_{t,1}= 1.0$ and $\Sigma_{s,1} = 0.9$, while $\Sigma_{t,2}= 3.0$ and $\Sigma_{s,2} = 0.9$. This results in the flux increase seen at the interface location. This can be understood by considering conceptually how the flux is influenced by the cross-sections. The total cross-section to the right of the interface is higher, meaning that neutrons are more likely to interact in general. Because the scattering cross-sections are equal, all of the increase in total cross-section contributes to an increase in the absorption cross-section. The probability for absorption is higher to the right of the interface, so neutrons traveling from left to right across the interface are much more likely to get absorbed than scatter. In other words, not only are particles crossing the interface from left to right more likely to interact in general but they are much more likely to be absorbed. Many particles likely pass through the bins immediately to the left of the interface and are then absorbed to the right of the interface, leaving those bins with a lower collision tally.
 
 The statistical quality of the result can be altered by careful problem setup. Increasing the number of histories decreases the relative error and standard deviation. The relative error can also be decreased by making the spatial bins more coarse. If there are less spatial bins, more particles will fall into each, improving the statistics in each bin. The standard deviation is largest where the flux is highest; conversely, because the relative error is equal to the standard deviation divided by the mean flux, the relative error is largest near the boundaries where the flux is near zero. This indicates the significance of the relative error. Because more particles exist in the high flux regions, the result should be best resolved where the flux is highest, leading to the lowest relative error.
 
-For this simple problem, it does not take many particles to arrive at a solution with acceptable statistics; the analog Monte Carlo is satisfactory. This works well when most of the particles contribute to the tallies. When this is not the case, the statistical uncertainty of the answer can be enormous. To avoid this, non-analog Monte Carlo is used, which attempts to follow interesting particles more than non-interesting ones, therefore increasing the chances that more particles will contribute to the tally. To avoid artificial inflation of the tally results, the contribution of each particle to the tally is modified to remove the effect of this biasing. There are many ways to do this, referred to generally as variance reduction \cite{MCNP}. Though none of these methods are not included in this code, many can be readily implemented in future versions.
+For this simple problem, it does not take many particles to arrive at a solution with acceptable statistics; the analog Monte Carlo is satisfactory. This works well when most of the particles contribute to the tallies. When this is not the case, the statistical uncertainty of the answer can be enormous. To avoid this, non-analog Monte Carlo is used, which attempts to follow interesting particles more than non-interesting ones, therefore increasing the chances that more particles will contribute to the tally. To avoid artificial inflation of the tally results, the contribution of each particle to the tally is modified to remove the effect of this biasing. There are many ways to do this, referred to generally as variance reduction \cite{MCNP}. Though these methods are not included in this code, many can be readily implemented in future versions.
 
 % REFERENCES
 \begin{thebibliography}{9}
@@ -215,6 +215,11 @@ For this simple problem, it does not take many particles to arrive at a solution
 \bibitem{MCNP}
 \textit{MCNP5 - A General Monte Carlo N-Particle Transport Code, Version 5}.
 Volume 1: Overview and Theory. X-5 Monte Carlo Team, Los Alamos National Laboratory (rev. 2008).
+
+\bibitem{NE250_notes_2}
+R. Slaybaugh.
+\textit{UCBNE250 Class Notes Fall 2015}.
+October 26, 2015.
 
 \bibitem{duderstadt}
 J. J. Duderstadt, L. J. Hamilton
@@ -235,11 +240,6 @@ John Wiley \& Sons, Inc. 1976.
 %R. Slaybaugh.
 %\textit{UCBNE250 Class Notes Fall 2015}.
 %October 21, 2015.
-
-%\bibitem{NE250_notes_2}
-%R. Slaybaugh.
-%\textit{UCBNE250 Class Notes Fall 2015}.
-%October 26, 2015.
 
 \end{thebibliography}
 
